@@ -1,0 +1,13 @@
+{
+  "name": "login-session-tut",
+  "version": "1.0.0",
+  "description": "Auth-tut with session",
+  "main": "index.js",
+  "repository": "https://github.com/donggyushin/session-login.git",
+  "author": "rontend",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "eslint.packageManager": "yarn"
+}
