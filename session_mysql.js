@@ -88,33 +88,23 @@ app.get("/register", (req, res) => {
 app.post("/auth/register", (req, res) => {
   var username = req.body.username;
   var password = req.body.password;
-  var check = checkUsername(username, res);
+  var check = checkUsername(username);
 
-  console.log(check);
-
-  if (check === 1) {
+  if (check === 0) {
     makeNewUser(username, password, res, req);
   }
 });
 
-function checkUsername(username, res) {
-  var sql = "SELECT * FROM user WHERE username =?";
+const checkUsername = username => {
+  var sql = "SELECT * FROM user WHERE username = ?";
   var post = [username];
-  var result = 1;
-  conn.query(sql, post, (err, results, fields) => {
+  var check = conn.query(sql, post, (err, results, fields) => {
     if (err) {
       console.log(err);
-      res.send("fail to register. database error");
-    } else {
-      if (results.length !== 0) {
-        res.send("fail to register. there is same username already");
-      } else {
-        console.log("here!");
-        return 1;
-      }
     }
   });
-}
+  return check._results.length;
+};
 
 const makeNewUser = (username, password, res, req) => {
   var sql = "INSERT INTO user (username, password) VALUES (?, ?)";
